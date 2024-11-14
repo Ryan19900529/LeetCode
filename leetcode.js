@@ -1396,3 +1396,47 @@ function sumToN(n) {
 // };
 // TC: O(n)
 // SC: O(n)
+
+// 230. Kth Smallest Element in a BST
+// Recursive Approach
+// var kthSmallest = function (root, k) {
+//   var recur = (node, arr) => {
+//     if (node.left) {
+//       recur(node.left, arr);
+//     }
+//     arr.push(node);
+//     if (node.right) {
+//       recur(node.right, arr);
+//     }
+//     return arr;
+//   };
+//   const arr = recur(root, []);
+//   return arr[k - 1].val;
+// };
+// TC: O(n) Each node is visited exactly once, so the traversal has a time complexity of O(n), where n is the number of nodes in the tree.
+// SC: O(n) Recursive Call Stack: The recursion depth is O(h), where h is the height of the tree. This can be O(log n) for a balanced tree or O(n) for a skewed tree.
+
+// Iterative Approach
+// https://www.youtube.com/watch?v=5LUXSvjmGCw
+// var kthSmallest = function (root, k) {
+//   let n = 0;
+//   const stack = [];
+//   let current = root;
+//   while (current !== null || stack.length > 0) {
+//     // Reach the leftmost node of the current node
+//     while (current !== null) {
+//       stack.push(current);
+//       current = current.left;
+//     }
+//     // Current is now the leftmost node, pop it
+//     current = stack.pop();
+//     n += 1;
+//     if (n === k) return current.val;
+
+//     // Move to the right child
+//     current = current.right;
+//   }
+//   return null; // in case k is out of bounds
+// };
+// TC: O(H+k) where H is the height of the tree and k is the number of elements to traverse.
+// SC: O(H) due to the stack that holds nodes.
