@@ -1440,3 +1440,26 @@ function sumToN(n) {
 // };
 // TC: O(H+k) where H is the height of the tree and k is the number of elements to traverse.
 // SC: O(H) due to the stack that holds nodes.
+
+// 105. Construct Binary Tree from Preorder and Inorder Traversal
+// https://www.youtube.com/watch?v=ihj4IQGZ2zc
+// var buildTree = function (preorder, inorder) {
+//   if (preorder.length === 0 || inorder.length === 0) return null;
+
+//   const root = new TreeNode(preorder[0]);
+//   let mid = inorder.indexOf(preorder[0]);
+//   root.left = buildTree(preorder.slice(1, mid + 1), inorder.slice(0, mid));
+//   root.right = buildTree(preorder.slice(mid + 1), inorder.slice(mid + 1));
+
+//   return root;
+// };
+/* TC: O(n^2) Each recursive call processes arrays using slice and indexOf:
+   1. slice: O(m), where m is the size of the current array.
+   2. indexOf: O(m).
+   For n nodes, this leads to O(n^2) in the worst case (unbalanced tree), as each indexOf and slice processes the entire array repeatedly.
+*/
+/* SC: O(n) not O(n^2)
+   Call Stack: The recursion depth is O(h), where h is the height of the tree. In the worst case (skewed tree), h=n, leading to O(n).
+   Subarrays: The slice operations create new arrays, contributing an additional O(n) space in total.
+   At each recursion level, a new subarray is created using slice, consuming additional memory. However, these subarrays are not all stored simultaneously in memory. Each recursive call creates subarrays, processes them, and releases them as the function unwinds.
+*/
