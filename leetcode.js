@@ -1454,12 +1454,36 @@ function sumToN(n) {
 //   return root;
 // };
 /* TC: O(n^2) Each recursive call processes arrays using slice and indexOf:
-   1. slice: O(m), where m is the size of the current array.
-   2. indexOf: O(m).
-   For n nodes, this leads to O(n^2) in the worst case (unbalanced tree), as each indexOf and slice processes the entire array repeatedly.
+   1. Number of Recursive Calls: n (one for each node).
+   2-1. slice: O(m), where m is the size of the current array.
+   2-2. indexOf: O(m).
+   Given that there are n recursive calls, and for each call you have O(2m) operations, the total time complexity will be: O(n * 2m) => O(n * m)
 */
 /* SC: O(n) not O(n^2)
    Call Stack: The recursion depth is O(h), where h is the height of the tree. In the worst case (skewed tree), h=n, leading to O(n).
    Subarrays: The slice operations create new arrays, contributing an additional O(n) space in total.
    At each recursion level, a new subarray is created using slice, consuming additional memory. However, these subarrays are not all stored simultaneously in memory. Each recursive call creates subarrays, processes them, and releases them as the function unwinds.
 */
+
+// 124. Binary Tree Maximum Path Sum
+// https://www.youtube.com/watch?v=EK0A__Ri2Ms
+// var maxPathSum = function (root) {
+//   let max = -Infinity;
+//   var dfs = function (root) {
+//     if (!root) return 0;
+
+//     const left = Math.max(0, dfs(root.left));
+//     const right = Math.max(0, dfs(root.right));
+
+//     const currentMax = left + root.val + right;
+//     max = Math.max(max, currentMax);
+
+//     return root.val + Math.max(left, right);
+//   };
+//   dfs(root);
+//   return max;
+// };
+// TC: O(n)
+// Each node in the binary tree is visited exactly once during the traversal.
+// The recursive calls do not "redo" work; they simply traverse the tree in a structured way (post-order traversal).
+// SC: O(h)
