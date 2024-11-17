@@ -1548,3 +1548,21 @@ var deserialize = function (data) {
 };
 // TC: O(n)
 // SC: O(n)
+
+// Recursive
+var serialize = function (root) {
+  // Preorder Traversal
+  function dfs(node) {
+    if (!node) {
+      result.push(null);
+      return;
+    }
+    result.push(node.val);
+    dfs(node.left);
+    dfs(node.right);
+  }
+
+  const result = [];
+  dfs(root);
+  return JSON.stringify(result);
+};
