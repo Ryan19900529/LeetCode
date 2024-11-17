@@ -1487,3 +1487,64 @@ function sumToN(n) {
 // Each node in the binary tree is visited exactly once during the traversal.
 // The recursive calls do not "redo" work; they simply traverse the tree in a structured way (post-order traversal).
 // SC: O(h)
+
+// 297. Serialize and Deserialize Binary Tree
+// BFS
+var serialize = function (root) {
+  if (!root) return "[]";
+  const result = [];
+  const queue = [root];
+
+  while (queue.length > 0) {
+    const node = queue.shift();
+
+    if (node) {
+      result.push(node.val);
+
+      if (node.left) {
+        queue.push(node.left);
+      } else {
+        queue.push(null);
+      }
+      if (node.right) {
+        queue.push(node.right);
+      } else {
+        queue.push(null);
+      }
+    } else {
+      result.push(null);
+    }
+  }
+  // if use join: console.log(result.join(',')); // "1,2,3,,,4,5"
+  return JSON.stringify(result);
+};
+// TC: O(n)
+// SC: O(n)
+var deserialize = function (data) {
+  const treeArr = JSON.parse(data);
+  if (treeArr.length === 0 || treeArr[0] === null) return null;
+  const root = new TreeNode(treeArr.shift()); // root points to { val: 1, left: null, right: null }
+  const queue = [root]; // current also points to { val: 1, left: null, right: null }
+
+  while (queue.length > 0) {
+    const current = queue.shift();
+    // The root variable remains a reference to the same tree, even as you build it by modifying current.
+
+    const leftVal = treeArr.shift();
+    if (leftVal !== null) {
+      current.left = new TreeNode(leftVal); // Modifies the same object in memory
+      // Now root is { val: 1, left: { val: 2, left: null, right: null }, right: null }
+      queue.push(current.left);
+    }
+
+    const rightVal = treeArr.shift();
+    if (rightVal !== null) {
+      current.right = new TreeNode(rightVal);
+      queue.push(current.right);
+    }
+  }
+
+  return root;
+};
+// TC: O(n)
+// SC: O(n)
