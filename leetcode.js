@@ -1490,79 +1490,266 @@ function sumToN(n) {
 
 // 297. Serialize and Deserialize Binary Tree
 // BFS
-var serialize = function (root) {
-  if (!root) return "[]";
-  const result = [];
-  const queue = [root];
+// var serialize = function (root) {
+//   if (!root) return "[]";
+//   const result = [];
+//   const queue = [root];
 
-  while (queue.length > 0) {
-    const node = queue.shift();
+//   while (queue.length > 0) {
+//     const node = queue.shift();
 
-    if (node) {
-      result.push(node.val);
+//     if (node) {
+//       result.push(node.val);
 
-      if (node.left) {
-        queue.push(node.left);
-      } else {
-        queue.push(null);
-      }
-      if (node.right) {
-        queue.push(node.right);
-      } else {
-        queue.push(null);
-      }
-    } else {
-      result.push(null);
-    }
-  }
-  // if use join: console.log(result.join(',')); // "1,2,3,,,4,5"
-  return JSON.stringify(result);
-};
+//       if (node.left) {
+//         queue.push(node.left);
+//       } else {
+//         queue.push(null);
+//       }
+//       if (node.right) {
+//         queue.push(node.right);
+//       } else {
+//         queue.push(null);
+//       }
+//     } else {
+//       result.push(null);
+//     }
+//   }
+//   // if use join: console.log(result.join(',')); // "1,2,3,,,4,5"
+//   return JSON.stringify(result);
+// };
 // TC: O(n)
 // SC: O(n)
-var deserialize = function (data) {
-  const treeArr = JSON.parse(data);
-  if (treeArr.length === 0 || treeArr[0] === null) return null;
-  const root = new TreeNode(treeArr.shift()); // root points to { val: 1, left: null, right: null }
-  const queue = [root]; // current also points to { val: 1, left: null, right: null }
+// var deserialize = function (data) {
+//   const treeArr = JSON.parse(data);
+//   if (treeArr.length === 0 || treeArr[0] === null) return null;
+//   const root = new TreeNode(treeArr.shift()); // root points to { val: 1, left: null, right: null }
+//   const queue = [root]; // current also points to { val: 1, left: null, right: null }
 
-  while (queue.length > 0) {
-    const current = queue.shift();
-    // The root variable remains a reference to the same tree, even as you build it by modifying current.
+//   while (queue.length > 0) {
+//     const current = queue.shift();
+//     // The root variable remains a reference to the same tree, even as you build it by modifying current.
 
-    const leftVal = treeArr.shift();
-    if (leftVal !== null) {
-      current.left = new TreeNode(leftVal); // Modifies the same object in memory
-      // Now root is { val: 1, left: { val: 2, left: null, right: null }, right: null }
-      queue.push(current.left);
-    }
+//     const leftVal = treeArr.shift();
+//     if (leftVal !== null) {
+//       current.left = new TreeNode(leftVal); // Modifies the same object in memory
+//       // Now root is { val: 1, left: { val: 2, left: null, right: null }, right: null }
+//       queue.push(current.left);
+//     }
 
-    const rightVal = treeArr.shift();
-    if (rightVal !== null) {
-      current.right = new TreeNode(rightVal);
-      queue.push(current.right);
-    }
-  }
+//     const rightVal = treeArr.shift();
+//     if (rightVal !== null) {
+//       current.right = new TreeNode(rightVal);
+//       queue.push(current.right);
+//     }
+//   }
 
-  return root;
-};
+//   return root;
+// };
 // TC: O(n)
 // SC: O(n)
 
-// Recursive
-var serialize = function (root) {
-  // Preorder Traversal
-  function dfs(node) {
-    if (!node) {
-      result.push(null);
-      return;
-    }
-    result.push(node.val);
-    dfs(node.left);
-    dfs(node.right);
+// Recursive (Preorder Traversal)
+// var serialize = function (root) {
+//   function dfs(node) {
+//     if (!node) {
+//       result.push(null);
+//       return;
+//     }
+//     result.push(node.val);
+//     dfs(node.left);
+//     dfs(node.right);
+//   }
+
+//   const result = [];
+//   dfs(root);
+//   return JSON.stringify(result);
+// };
+// TC: O(n)
+// SC: O(n)
+// var deserialize = function (data) {
+//   const treeArr = JSON.parse(data); // treeArr = [1, 2, null, null, 3, 4, null, null, 5, null, null];
+//   let index = 0; // Pointer to track the current position in the array
+
+//   function buildTree() {
+//     if (index >= treeArr.length || treeArr[index] === null) {
+//       index++; // Skip the null value and move to the next element
+//       return null;
+//     }
+//     const node = new TreeNode(treeArr[index++]); // Create a new TreeNode with the current value, then increase 1
+//     node.left = buildTree();
+//     node.right = buildTree();
+//     return node;
+//   }
+//   return buildTree();
+// };
+// TC: O(n)
+// SC: O(n)
+
+// 295. Find Median from Data Stream
+// https://www.youtube.com/watch?v=itmhHWaHupI
+class MedianFinder {
+  constructor() {
+    this.small = new MaxHeap();
+    this.large = new MinHeap();
   }
 
-  const result = [];
-  dfs(root);
-  return JSON.stringify(result);
-};
+  addNum(num) {
+    // add to small first
+    this.small.insert(num);
+
+    // make sure every num in small is <= every num in large
+    if (
+      this.small.size() > 0 &&
+      this.large.size() > 0 &&
+      this.small.peek() > this.large.peek()
+    ) {
+      this.large.insert(this.small.extractMax());
+    }
+
+    // uneven size?
+    if (this.small.size() > this.large.size() + 1) {
+      this.large.insert(this.small.extractMax());
+    }
+    if (this.large.size() > this.small.size() + 1) {
+      this.small.insert(this.large.extractMin());
+    }
+  }
+
+  findMedian() {
+    if (this.small.size() > this.large.size()) return this.small.peek();
+    if (this.large.size() > this.small.size()) return this.large.peek();
+
+    return (this.small.peek() + this.large.peek()) / 2;
+  }
+}
+// TC: addNum: O(logn), findMedian: O(1)
+// SC: O(n)
+
+// Helper class: Min Heap (ignore)
+class MinHeap {
+  constructor() {
+    this.heap = [];
+  }
+
+  insert(val) {
+    this.heap.push(val);
+    this._heapifyUp();
+  }
+
+  extractMin() {
+    if (this.heap.length === 1) return this.heap.pop();
+    const min = this.heap[0];
+    this.heap[0] = this.heap.pop();
+    this._heapifyDown();
+    return min;
+  }
+
+  peek() {
+    return this.heap[0];
+  }
+
+  size() {
+    return this.heap.length;
+  }
+
+  _heapifyUp() {
+    let index = this.heap.length - 1;
+    while (index > 0) {
+      const parentIndex = Math.floor((index - 1) / 2);
+      if (this.heap[index] >= this.heap[parentIndex]) break;
+      [this.heap[index], this.heap[parentIndex]] = [
+        this.heap[parentIndex],
+        this.heap[index],
+      ];
+      index = parentIndex;
+    }
+  }
+
+  _heapifyDown() {
+    let index = 0;
+    const length = this.heap.length;
+    while (true) {
+      const leftChild = 2 * index + 1;
+      const rightChild = 2 * index + 2;
+      let smallest = index;
+
+      if (leftChild < length && this.heap[leftChild] < this.heap[smallest]) {
+        smallest = leftChild;
+      }
+      if (rightChild < length && this.heap[rightChild] < this.heap[smallest]) {
+        smallest = rightChild;
+      }
+      if (smallest === index) break;
+      [this.heap[index], this.heap[smallest]] = [
+        this.heap[smallest],
+        this.heap[index],
+      ];
+      index = smallest;
+    }
+  }
+}
+
+// Helper class: Max Heap (ignore)
+class MaxHeap {
+  constructor() {
+    this.heap = [];
+  }
+
+  insert(val) {
+    this.heap.push(val);
+    this._heapifyUp();
+  }
+
+  extractMax() {
+    if (this.heap.length === 1) return this.heap.pop();
+    const max = this.heap[0];
+    this.heap[0] = this.heap.pop();
+    this._heapifyDown();
+    return max;
+  }
+
+  peek() {
+    return this.heap[0];
+  }
+
+  size() {
+    return this.heap.length;
+  }
+
+  _heapifyUp() {
+    let index = this.heap.length - 1;
+    while (index > 0) {
+      const parentIndex = Math.floor((index - 1) / 2);
+      if (this.heap[index] <= this.heap[parentIndex]) break;
+      [this.heap[index], this.heap[parentIndex]] = [
+        this.heap[parentIndex],
+        this.heap[index],
+      ];
+      index = parentIndex;
+    }
+  }
+
+  _heapifyDown() {
+    let index = 0;
+    const length = this.heap.length;
+    while (true) {
+      const leftChild = 2 * index + 1;
+      const rightChild = 2 * index + 2;
+      let largest = index;
+
+      if (leftChild < length && this.heap[leftChild] > this.heap[largest]) {
+        largest = leftChild;
+      }
+      if (rightChild < length && this.heap[rightChild] > this.heap[largest]) {
+        largest = rightChild;
+      }
+      if (largest === index) break;
+      [this.heap[index], this.heap[largest]] = [
+        this.heap[largest],
+        this.heap[index],
+      ];
+      index = largest;
+    }
+  }
+}
