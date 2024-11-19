@@ -1588,168 +1588,201 @@ function sumToN(n) {
 
 // 295. Find Median from Data Stream
 // https://www.youtube.com/watch?v=itmhHWaHupI
-class MedianFinder {
-  constructor() {
-    this.small = new MaxHeap();
-    this.large = new MinHeap();
-  }
+// class MedianFinder {
+//   constructor() {
+//     this.small = new MaxHeap();
+//     this.large = new MinHeap();
+//   }
 
-  addNum(num) {
-    // add to small first
-    this.small.insert(num);
+//   addNum(num) {
+//     // add to small first
+//     this.small.insert(num);
 
-    // make sure every num in small is <= every num in large
-    if (
-      this.small.size() > 0 &&
-      this.large.size() > 0 &&
-      this.small.peek() > this.large.peek()
-    ) {
-      this.large.insert(this.small.extractMax());
-    }
+//     // make sure every num in small is <= every num in large
+//     if (
+//       this.small.size() > 0 &&
+//       this.large.size() > 0 &&
+//       this.small.peek() > this.large.peek()
+//     ) {
+//       this.large.insert(this.small.extractMax());
+//     }
 
-    // uneven size?
-    if (this.small.size() > this.large.size() + 1) {
-      this.large.insert(this.small.extractMax());
-    }
-    if (this.large.size() > this.small.size() + 1) {
-      this.small.insert(this.large.extractMin());
-    }
-  }
+//     // uneven size?
+//     if (this.small.size() > this.large.size() + 1) {
+//       this.large.insert(this.small.extractMax());
+//     }
+//     if (this.large.size() > this.small.size() + 1) {
+//       this.small.insert(this.large.extractMin());
+//     }
+//   }
 
-  findMedian() {
-    if (this.small.size() > this.large.size()) return this.small.peek();
-    if (this.large.size() > this.small.size()) return this.large.peek();
+//   findMedian() {
+//     if (this.small.size() > this.large.size()) return this.small.peek();
+//     if (this.large.size() > this.small.size()) return this.large.peek();
 
-    return (this.small.peek() + this.large.peek()) / 2;
-  }
-}
-// TC: addNum: O(logn), findMedian: O(1)
+//     return (this.small.peek() + this.large.peek()) / 2;
+//   }
+// }
+// // TC: addNum: O(logn), findMedian: O(1)
+// // SC: O(n)
+
+// // Helper class: Min Heap (ignore)
+// class MinHeap {
+//   constructor() {
+//     this.heap = [];
+//   }
+
+//   insert(val) {
+//     this.heap.push(val);
+//     this._heapifyUp();
+//   }
+
+//   extractMin() {
+//     if (this.heap.length === 1) return this.heap.pop();
+//     const min = this.heap[0];
+//     this.heap[0] = this.heap.pop();
+//     this._heapifyDown();
+//     return min;
+//   }
+
+//   peek() {
+//     return this.heap[0];
+//   }
+
+//   size() {
+//     return this.heap.length;
+//   }
+
+//   _heapifyUp() {
+//     let index = this.heap.length - 1;
+//     while (index > 0) {
+//       const parentIndex = Math.floor((index - 1) / 2);
+//       if (this.heap[index] >= this.heap[parentIndex]) break;
+//       [this.heap[index], this.heap[parentIndex]] = [
+//         this.heap[parentIndex],
+//         this.heap[index],
+//       ];
+//       index = parentIndex;
+//     }
+//   }
+
+//   _heapifyDown() {
+//     let index = 0;
+//     const length = this.heap.length;
+//     while (true) {
+//       const leftChild = 2 * index + 1;
+//       const rightChild = 2 * index + 2;
+//       let smallest = index;
+
+//       if (leftChild < length && this.heap[leftChild] < this.heap[smallest]) {
+//         smallest = leftChild;
+//       }
+//       if (rightChild < length && this.heap[rightChild] < this.heap[smallest]) {
+//         smallest = rightChild;
+//       }
+//       if (smallest === index) break;
+//       [this.heap[index], this.heap[smallest]] = [
+//         this.heap[smallest],
+//         this.heap[index],
+//       ];
+//       index = smallest;
+//     }
+//   }
+// }
+
+// // Helper class: Max Heap (ignore)
+// class MaxHeap {
+//   constructor() {
+//     this.heap = [];
+//   }
+
+//   insert(val) {
+//     this.heap.push(val);
+//     this._heapifyUp();
+//   }
+
+//   extractMax() {
+//     if (this.heap.length === 1) return this.heap.pop();
+//     const max = this.heap[0];
+//     this.heap[0] = this.heap.pop();
+//     this._heapifyDown();
+//     return max;
+//   }
+
+//   peek() {
+//     return this.heap[0];
+//   }
+
+//   size() {
+//     return this.heap.length;
+//   }
+
+//   _heapifyUp() {
+//     let index = this.heap.length - 1;
+//     while (index > 0) {
+//       const parentIndex = Math.floor((index - 1) / 2);
+//       if (this.heap[index] <= this.heap[parentIndex]) break;
+//       [this.heap[index], this.heap[parentIndex]] = [
+//         this.heap[parentIndex],
+//         this.heap[index],
+//       ];
+//       index = parentIndex;
+//     }
+//   }
+
+//   _heapifyDown() {
+//     let index = 0;
+//     const length = this.heap.length;
+//     while (true) {
+//       const leftChild = 2 * index + 1;
+//       const rightChild = 2 * index + 2;
+//       let largest = index;
+
+//       if (leftChild < length && this.heap[leftChild] > this.heap[largest]) {
+//         largest = leftChild;
+//       }
+//       if (rightChild < length && this.heap[rightChild] > this.heap[largest]) {
+//         largest = rightChild;
+//       }
+//       if (largest === index) break;
+//       [this.heap[index], this.heap[largest]] = [
+//         this.heap[largest],
+//         this.heap[index],
+//       ];
+//       index = largest;
+//     }
+//   }
+// }
+
+// 39. Combination Sum
+// https://www.youtube.com/watch?v=mYqNn4dL1co
+// var combinationSum = function (candidates, target) {
+//   const result = [];
+
+//   function backTrack(remaining, start, currentCombination) {
+//     // Base case: when remaining sum is 0, add the combination(copy) to the result
+//     if (remaining === 0) {
+//       result.push([...currentCombination]);
+//       return;
+//     }
+//     // Base case: stop exploring this path if remaining sum < 0
+//     if (remaining < 0) return;
+
+//     // Iterate through the candidates starting from `start` index
+//     for (let i = start; i < candidates.length; i++) {
+//       // Add the candidate to the current combination
+//       currentCombination.push(candidates[i]);
+
+//       // Recurse: use the current candidate again (unlimited times allowed)
+//       backTrack(remaining - candidates[i], i, currentCombination);
+
+//       // Backtrack: remove the last added number to try other combinations
+//       currentCombination.pop();
+//     }
+//   }
+
+//   backTrack(target, 0, []);
+//   return result;
+// };
+// TC: O(2*T) https://www.youtube.com/watch?v=GBKI9VSKdGg
 // SC: O(n)
-
-// Helper class: Min Heap (ignore)
-class MinHeap {
-  constructor() {
-    this.heap = [];
-  }
-
-  insert(val) {
-    this.heap.push(val);
-    this._heapifyUp();
-  }
-
-  extractMin() {
-    if (this.heap.length === 1) return this.heap.pop();
-    const min = this.heap[0];
-    this.heap[0] = this.heap.pop();
-    this._heapifyDown();
-    return min;
-  }
-
-  peek() {
-    return this.heap[0];
-  }
-
-  size() {
-    return this.heap.length;
-  }
-
-  _heapifyUp() {
-    let index = this.heap.length - 1;
-    while (index > 0) {
-      const parentIndex = Math.floor((index - 1) / 2);
-      if (this.heap[index] >= this.heap[parentIndex]) break;
-      [this.heap[index], this.heap[parentIndex]] = [
-        this.heap[parentIndex],
-        this.heap[index],
-      ];
-      index = parentIndex;
-    }
-  }
-
-  _heapifyDown() {
-    let index = 0;
-    const length = this.heap.length;
-    while (true) {
-      const leftChild = 2 * index + 1;
-      const rightChild = 2 * index + 2;
-      let smallest = index;
-
-      if (leftChild < length && this.heap[leftChild] < this.heap[smallest]) {
-        smallest = leftChild;
-      }
-      if (rightChild < length && this.heap[rightChild] < this.heap[smallest]) {
-        smallest = rightChild;
-      }
-      if (smallest === index) break;
-      [this.heap[index], this.heap[smallest]] = [
-        this.heap[smallest],
-        this.heap[index],
-      ];
-      index = smallest;
-    }
-  }
-}
-
-// Helper class: Max Heap (ignore)
-class MaxHeap {
-  constructor() {
-    this.heap = [];
-  }
-
-  insert(val) {
-    this.heap.push(val);
-    this._heapifyUp();
-  }
-
-  extractMax() {
-    if (this.heap.length === 1) return this.heap.pop();
-    const max = this.heap[0];
-    this.heap[0] = this.heap.pop();
-    this._heapifyDown();
-    return max;
-  }
-
-  peek() {
-    return this.heap[0];
-  }
-
-  size() {
-    return this.heap.length;
-  }
-
-  _heapifyUp() {
-    let index = this.heap.length - 1;
-    while (index > 0) {
-      const parentIndex = Math.floor((index - 1) / 2);
-      if (this.heap[index] <= this.heap[parentIndex]) break;
-      [this.heap[index], this.heap[parentIndex]] = [
-        this.heap[parentIndex],
-        this.heap[index],
-      ];
-      index = parentIndex;
-    }
-  }
-
-  _heapifyDown() {
-    let index = 0;
-    const length = this.heap.length;
-    while (true) {
-      const leftChild = 2 * index + 1;
-      const rightChild = 2 * index + 2;
-      let largest = index;
-
-      if (leftChild < length && this.heap[leftChild] > this.heap[largest]) {
-        largest = leftChild;
-      }
-      if (rightChild < length && this.heap[rightChild] > this.heap[largest]) {
-        largest = rightChild;
-      }
-      if (largest === index) break;
-      [this.heap[index], this.heap[largest]] = [
-        this.heap[largest],
-        this.heap[index],
-      ];
-      index = largest;
-    }
-  }
-}
