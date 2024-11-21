@@ -1786,3 +1786,53 @@ function sumToN(n) {
 // };
 // TC: O(2*T) https://www.youtube.com/watch?v=GBKI9VSKdGg
 // SC: O(n)
+
+// 79. Word Search (DFS recursive)
+// https://www.youtube.com/watch?v=_bGRNR3D92s
+var exist = function (board, word) {
+  const rows = board.length;
+  const cols = board[0].length;
+  function dfs(row, col, index) {
+    // Base case: all characters in the word are matched
+    if (index === word.length) return true;
+
+    // Out of bounds or mismatch
+    if (
+      row < 0 ||
+      col < 0 ||
+      row >= rows ||
+      col >= cols ||
+      board[row][col] !== word[index]
+    )
+      return false;
+
+    // Save the current value and mark the cell as visited
+    const temp = board[row][col];
+    board[row][col] = "#";
+
+    // Explore all 4 directions
+    const found =
+      dfs(row + 1, col, index + 1) ||
+      dfs(row - 1, col, index + 1) ||
+      dfs(row, col + 1, index + 1) ||
+      dfs(row, col - 1, index + 1);
+
+    // Restore the cell
+    board[row][col] = temp;
+
+    return found;
+  }
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (dfs(row, col, 0)) return true;
+    }
+  }
+
+  return false;
+};
+// TC: O(N * 4^L)
+// N: Total cells in the board
+// L: Length of the word
+// 4: Each cell can have up to 4 recursive calls (directions).
+// SC: O(L) Maximum recursion depth equals the length of the word L.
