@@ -17,44 +17,20 @@
 // SC: O(1)
 
 // //283. Move Zeroes
-// //https://www.youtube.com/watch?v=BPb0q5J4u-k&ab_channel=CodingNinja
-// const moveZeroes = (nums) => {
-//   if (!Array.isArray(nums)) {
-//     console.log("invalid input");
-//   }
-
-//   // for (let i = 0; i < nums.length; i++) {
-//   //   for (let j = 0; j < nums.length; j++) {
-//   //     if (nums[j] === 0) {
-//   //       for (let x = j; x < nums.length - 1; x++) {
-//   //         nums[x] = nums[x + 1];
-//   //       }
-//   //       nums[nums.length - 1] = 0;
-//   //     }
-//   //   }
-//   // }
-//   let left = 0; // Pointer for where to place the next non-zero element
-//   for (let i = 0; i < nums.length; i++) {
-//     if (nums[i] !== 0) {
-//       // Swap non-zero element with the element at the left pointer
-//       let tem = nums[i];
-//       nums[i] = nums[left];
-//       nums[left] = tem;
-//       left++;
-//     }
-//   }
-
-//   return nums;
-// };
-
-// console.log(moveZeroes([0, 0, 1, 0, 3, 12]));
-// TC: O(n)
-// SC: O(1)
-const moveZeroes = (nums) => {};
-
+// //https://www.youtube.com/watch?v=aayNRwUN3Do
+const moveZeroes = (nums) => {
+  let left = 0;
+  for (let right = 0; right < nums.length; right++) {
+    if (nums[right] !== 0) {
+      [nums[left], nums[right]] = [nums[right], nums[left]];
+      left++;
+    }
+  }
+  return nums;
+};
 console.log(moveZeroes([0, 0, 1, 0, 3, 12]));
-TC: O();
-SC: O();
+TC: O(n);
+SC: O(1);
 
 //217. Contains Duplicate
 // const containsDuplicate = (nums) => {
