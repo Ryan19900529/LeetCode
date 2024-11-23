@@ -1,22 +1,5 @@
-// 1. Two Sum
-// const twoSum = (sums, target) => {
-//   let map = new Map();
-//   for (let i = 0; i < sums.length; i++) {
-//     num1 = sums[i];
-//     num2 = target - num1;
-//     if (map.has(num2)) {
-//       return [i, map.get(num2)];
-//     }
-//     map.set(num1, i);
-//   }
-
-//   return [];
-// };
-// console.log(twoSum([2, 7, 11, 15], 9));
-// TC: O(n)
-// SC: O(n)
-
 // //53. Maximum Subarray
+// https://www.youtube.com/watch?v=S-5nVIHXHv0
 // const maxSubArray = (nums) => {
 //   let currentSum = nums[0];
 //   let maxSum = nums[0];
@@ -67,6 +50,11 @@
 // console.log(moveZeroes([0, 0, 1, 0, 3, 12]));
 // TC: O(n)
 // SC: O(1)
+const moveZeroes = (nums) => {};
+
+console.log(moveZeroes([0, 0, 1, 0, 3, 12]));
+TC: O();
+SC: O();
 
 //217. Contains Duplicate
 // const containsDuplicate = (nums) => {
@@ -341,7 +329,7 @@
 // };
 // console.log(twoSum([2, 7, 11, 15], 9));
 // TC: O(n)
-// SC: O(1)
+// SC: O(n)
 
 // 49. Group Anagrams
 // var groupAnagrams = function (strs) {
@@ -1789,48 +1777,48 @@ function sumToN(n) {
 
 // 79. Word Search (DFS recursive)
 // https://www.youtube.com/watch?v=_bGRNR3D92s
-var exist = function (board, word) {
-  const rows = board.length;
-  const cols = board[0].length;
-  function dfs(row, col, index) {
-    // Base case: all characters in the word are matched
-    if (index === word.length) return true;
+// var exist = function (board, word) {
+//   const rows = board.length;
+//   const cols = board[0].length;
+//   function dfs(row, col, index) {
+//     // Base case: all characters in the word are matched
+//     if (index === word.length) return true;
 
-    // Out of bounds or mismatch
-    if (
-      row < 0 ||
-      col < 0 ||
-      row >= rows ||
-      col >= cols ||
-      board[row][col] !== word[index]
-    )
-      return false;
+//     // Out of bounds or mismatch
+//     if (
+//       row < 0 ||
+//       col < 0 ||
+//       row >= rows ||
+//       col >= cols ||
+//       board[row][col] !== word[index]
+//     )
+//       return false;
 
-    // Save the current value and mark the cell as visited
-    const temp = board[row][col];
-    board[row][col] = "#";
+//     // Save the current value and mark the cell as visited
+//     const temp = board[row][col];
+//     board[row][col] = "#";
 
-    // Explore all 4 directions
-    const found =
-      dfs(row + 1, col, index + 1) ||
-      dfs(row - 1, col, index + 1) ||
-      dfs(row, col + 1, index + 1) ||
-      dfs(row, col - 1, index + 1);
+//     // Explore all 4 directions
+//     const found =
+//       dfs(row + 1, col, index + 1) ||
+//       dfs(row - 1, col, index + 1) ||
+//       dfs(row, col + 1, index + 1) ||
+//       dfs(row, col - 1, index + 1);
 
-    // Restore the cell
-    board[row][col] = temp;
+//     // Restore the cell
+//     board[row][col] = temp;
 
-    return found;
-  }
+//     return found;
+//   }
 
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      if (dfs(row, col, 0)) return true;
-    }
-  }
+//   for (let row = 0; row < rows; row++) {
+//     for (let col = 0; col < cols; col++) {
+//       if (dfs(row, col, 0)) return true;
+//     }
+//   }
 
-  return false;
-};
+//   return false;
+// };
 // TC: O(N * 4^L)
 // N: Total cells in the board
 // L: Length of the word
