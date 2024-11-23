@@ -18,20 +18,21 @@
 
 // //283. Move Zeroes
 // //https://www.youtube.com/watch?v=aayNRwUN3Do
-const moveZeroes = (nums) => {
-  let left = 0;
-  for (let right = 0; right < nums.length; right++) {
-    if (nums[right] !== 0) {
-      [nums[left], nums[right]] = [nums[right], nums[left]];
-      left++;
-    }
-  }
-  return nums;
-};
-console.log(moveZeroes([0, 0, 1, 0, 3, 12]));
-TC: O(n);
-SC: O(1);
+// const moveZeroes = (nums) => {
+//   let left = 0;
+//   for (let right = 0; right < nums.length; right++) {
+//     if (nums[right] !== 0) {
+//       [nums[left], nums[right]] = [nums[right], nums[left]];
+//       left++;
+//     }
+//   }
+//   return nums;
+// };
+// console.log(moveZeroes([0, 0, 1, 0, 3, 12]));
+// TC: O(n);
+// SC: O(1);
 
+// Arrays & Hashing
 //217. Contains Duplicate
 // const containsDuplicate = (nums) => {
 //   const set = new Set();
@@ -48,6 +49,20 @@ SC: O(1);
 // console.log(containsDuplicate([1, 2, 3, 1]));
 // TC: O(n)
 // SC: O(n)
+const containsDuplicate = (nums) => {
+  const set = new Set();
+  for (let i in nums) {
+    if (set.has(i)) {
+      return true;
+    } else {
+      set.add(i);
+    }
+  }
+  return false;
+};
+console.log(containsDuplicate([1, 2, 3, 1]));
+TC: O(n);
+SC: O(n);
 
 //189. Rotate Array
 //https://www.youtube.com/watch?v=BHr381Guz3Y&ab_channel=NeetCode
