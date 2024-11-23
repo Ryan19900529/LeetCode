@@ -32,38 +32,6 @@
 // TC: O(n);
 // SC: O(1);
 
-// Arrays & Hashing
-//217. Contains Duplicate
-// const containsDuplicate = (nums) => {
-//   const set = new Set();
-
-//   for (let i of nums) {
-//     if (!set.has(i)) {
-//       set.add(i);
-//     } else {
-//       return true;
-//     }
-//   }
-//   return false;
-// };
-// console.log(containsDuplicate([1, 2, 3, 1]));
-// TC: O(n)
-// SC: O(n)
-const containsDuplicate = (nums) => {
-  const set = new Set();
-  for (let i in nums) {
-    if (set.has(i)) {
-      return true;
-    } else {
-      set.add(i);
-    }
-  }
-  return false;
-};
-console.log(containsDuplicate([1, 2, 3, 1]));
-TC: O(n);
-SC: O(n);
-
 //189. Rotate Array
 //https://www.youtube.com/watch?v=BHr381Guz3Y&ab_channel=NeetCode
 // const rotate = (nums, k) => {
@@ -92,6 +60,13 @@ SC: O(n);
 // console.log(rotate([1, 2, 3, 4, 5, 6, 7], 2));
 // TC: O(n) We reverse the array three times, but each reversal is O(n).
 // SC: O(1) This solution rotates the array in place without using extra space.
+// way2:
+// const rotate = (nums, k) => {
+//   let newK = k % nums.length;
+//   nums.unshift(...nums.splice( - newK)); // Move last newK elements to the front
+// };
+// TC: O(n);
+// SC: O(k);
 
 //232. Implement Queue using Stacks
 //https://www.youtube.com/watch?v=d0h0E8CuibU&ab_channel=AndyGala
@@ -272,6 +247,24 @@ SC: O(n);
 //   }
 // };
 // console.log(findDuplicate([1, 3, 4, 2, 2]));
+// TC: O(n)
+// SC: O(n)
+
+// Arrays & Hashing
+//217. Contains Duplicate
+// const containsDuplicate = (nums) => {
+//   const set = new Set();
+
+//   for (let i of nums) {
+//     if (!set.has(i)) {
+//       set.add(i);
+//     } else {
+//       return true;
+//     }
+//   }
+//   return false;
+// };
+// console.log(containsDuplicate([1, 2, 3, 1]));
 // TC: O(n)
 // SC: O(n)
 
