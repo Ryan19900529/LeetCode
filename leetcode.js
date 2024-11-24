@@ -152,6 +152,19 @@
 // Space Complexity:
 // O(h) where h is the height of the tree. In the worst case (for a skewed tree), the recursion stack will take O(n) space.
 
+var isValidBST = function (root) {
+  const valid = (node, left, right) => {
+    if (!node) return true;
+    if (left >= node.val) return false;
+    if (right <= node.val) return false;
+
+    return (
+      valid(node.left, left, node.val) && valid(node.right, node.val, right)
+    );
+  };
+  return valid(root, -Infinity, Infinity);
+};
+
 // 198. House Robber
 // https://www.youtube.com/watch?v=VXqUQYGMnQg&ab_channel=NikhilLohia
 // const rob = function (nums) {
