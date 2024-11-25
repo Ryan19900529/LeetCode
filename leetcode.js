@@ -201,6 +201,8 @@
 //   }
 //   return dp[dp.length - 1];
 // };
+// TC: O(n)
+// SC: O(n)
 // var climbStairs = function (n) {
 //   if (n <= 2) return n;
 //   let first = 1;
@@ -220,7 +222,7 @@
 // https://www.youtube.com/watch?v=1pkOgXD63yU&t=345s&ab_channel=NeetCode
 // var maxProfit = function (prices) {
 //   if (prices.length <= 1) return 0;
-//   let left = 0;
+//   let left = 0; // left = buy, right = sell
 //   let right = 1;
 //   let maxProfit = 0;
 //   while (right < prices.length) {
@@ -237,6 +239,19 @@
 // console.log(maxProfit([7, 1, 5, 3, 6, 4]));
 // TC: O(n)
 // SC: O(1)
+
+var maxProfit = function (prices) {
+  let buy = 0;
+  let sell = 1;
+  let maxProfit = 0;
+
+  while (sell < prices.length) {
+    maxProfit = Math.max(maxProfit, prices[sell] - prices[buy]);
+    if (prices[sell] < prices[buy]) buy = sell;
+    sell++;
+  }
+  return maxProfit;
+};
 
 // 287. Find the Duplicate Number
 // var findDuplicate = function (nums) {
