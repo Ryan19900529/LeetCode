@@ -153,8 +153,8 @@
 // O(h) where h is the height of the tree. In the worst case (for a skewed tree), the recursion stack will take O(n) space.
 
 // 198. House Robber
-// https://www.youtube.com/watch?v=VXqUQYGMnQg&ab_channel=NikhilLohia
 // https://www.youtube.com/watch?v=Q_nBUVnfcD8
+// https://www.youtube.com/watch?v=VXqUQYGMnQg&ab_channel=NikhilLohia
 // const rob = function (nums) {
 //   if (nums.length === 0) return 0;
 //   if (nums.length === 1) return nums[0];
@@ -188,21 +188,9 @@
 // SC: O(1)
 // console.log(rob2([2, 7, 3, 1, 4, 2, 1, 8]));
 
-var rob = function (nums) {
-  if (nums.length === 0) return 0;
-  if (nums.length === 1) return nums[0];
-
-  const dp = [];
-  dp[0] = nums[0];
-  dp[1] = Math.max(nums[0], nums[1]);
-  for (let i = 2; i < nums.length; i++) {
-    dp[i] = Math.max(nums[i] + dp[i - 2], dp[i - 1]);
-  }
-
-  return dp[dp.length - 1];
-};
-
 // 70. Climbing Stairs
+// https://www.youtube.com/watch?v=Ifek5h5VqJw
+// https://www.youtube.com/watch?v=Y0lT9Fck7qI
 // var climbStairs = function (n) {
 //   if (n <= 2) return n;
 //   let dp = [];
