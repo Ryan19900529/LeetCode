@@ -240,19 +240,6 @@
 // TC: O(n)
 // SC: O(1)
 
-var maxProfit = function (prices) {
-  let buy = 0;
-  let sell = 1;
-  let maxProfit = 0;
-
-  while (sell < prices.length) {
-    maxProfit = Math.max(maxProfit, prices[sell] - prices[buy]);
-    if (prices[sell] < prices[buy]) buy = sell;
-    sell++;
-  }
-  return maxProfit;
-};
-
 // 287. Find the Duplicate Number
 // var findDuplicate = function (nums) {
 //   const map = new Map();
@@ -267,6 +254,30 @@ var maxProfit = function (prices) {
 // console.log(findDuplicate([1, 3, 4, 2, 2]));
 // TC: O(n)
 // SC: O(n)
+
+// Floyd's Cycle (hard)
+// https://www.youtube.com/watch?v=wjYnzkAhcNk
+var findDuplicate = function (nums) {
+  let slow = nums[0];
+  let fast = nums[0];
+
+  // Phase 1: Detect the cycle
+  do {
+    slow = nums[slow]; // Move slow by 1 step
+    fast = nums[nums[fast]]; // Move fast by 2 steps
+  } while (slow !== fast);
+
+  // Phase 2: Find the start of the cycle (duplicate number)
+  slow = nums[0]; // Reset slow to the start
+  while (slow !== fast) {
+    slow = nums[slow]; // Move both pointers by 1 step
+    fast = nums[fast];
+  }
+
+  return slow;
+};
+// TC: O(n)
+// SC: O(1)
 
 // Arrays & Hashing
 //217. Contains Duplicate
