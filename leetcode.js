@@ -257,25 +257,25 @@
 
 // Floyd's Cycle (hard)
 // https://www.youtube.com/watch?v=wjYnzkAhcNk
-var findDuplicate = function (nums) {
-  let slow = nums[0];
-  let fast = nums[0];
+// var findDuplicate = function (nums) {
+//   let slow = nums[0];
+//   let fast = nums[0];
 
-  // Phase 1: Detect the cycle
-  do {
-    slow = nums[slow]; // Move slow by 1 step
-    fast = nums[nums[fast]]; // Move fast by 2 steps
-  } while (slow !== fast);
+//   // Phase 1: Detect the cycle
+//   do {
+//     slow = nums[slow]; // Move slow by 1 step
+//     fast = nums[nums[fast]]; // Move fast by 2 steps
+//   } while (slow !== fast);
 
-  // Phase 2: Find the start of the cycle (duplicate number)
-  slow = nums[0]; // Reset slow to the start
-  while (slow !== fast) {
-    slow = nums[slow]; // Move both pointers by 1 step
-    fast = nums[fast];
-  }
+//   // Phase 2: Find the start of the cycle (duplicate number)
+//   slow = nums[0]; // Reset slow to the start
+//   while (slow !== fast) {
+//     slow = nums[slow]; // Move both pointers by 1 step
+//     fast = nums[fast];
+//   }
 
-  return slow;
-};
+//   return slow;
+// };
 // TC: O(n)
 // SC: O(1)
 
@@ -358,8 +358,8 @@ var findDuplicate = function (nums) {
 //   return Object.values(map);
 // };
 // console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
-// TC: O(nlogn)
-// SC: O(1)
+// TC: O(n * klogk) n: b strings; k: Sorting a string of average length k
+// SC: O(n * k) n: n strings; k: k keys
 
 // 347. Top K Frequent Elements (Bucket Sort)
 // https://www.youtube.com/watch?v=87f9RVChpzY&ab_channel=AlgoJS
