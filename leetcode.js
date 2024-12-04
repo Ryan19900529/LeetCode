@@ -357,23 +357,32 @@
 //   }
 //   return Object.values(map);
 // };
+// use new Map()
+// function groupAnagrams(strs) {
+//   const map = new Map();
+
+//   // Create sorted keys for each string
+//   const newArr = strs.map(s => s.split('').sort().join(''));
+
+//   // Populate the map
+//   for (let i = 0; i < strs.length; i++) {
+//       if (map.has(newArr[i])) {
+//           map.get(newArr[i]).push(strs[i]);
+//       } else {
+//           map.set(newArr[i], [strs[i]]); // Initialize as an array
+//       }
+//   }
+
+//   // Return grouped anagrams as an array of arrays
+//   return Array.from(map.values());
+// }
 // console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
-// TC: O(n * klogk) n: b strings; k: Sorting a string of average length k
+// TC: O(n * klogk) n: n strings; k: Sorting a string of average length k
 // SC: O(n * k) n: n strings; k: k keys
 
 // 347. Top K Frequent Elements (Bucket Sort)
 // https://www.youtube.com/watch?v=87f9RVChpzY&ab_channel=AlgoJS
 // var topKFrequent = function (nums, k) {
-//   // const map = {};
-//   // let bucket = [];
-//   // let result = [];
-//   // for (let i = 0; i < nums.length; i++) {
-//   //   if (!map[nums[i]]) {
-//   //     map[nums[i]] = 1;
-//   //   } else {
-//   //     map[nums[i]]++;
-//   //   }
-//   // }
 //   const freqMap = new Map();
 //   const bucket = [];
 //   const result = [];
@@ -383,11 +392,9 @@
 //   }
 //   for ([key, value] of freqMap) {
 //     if (!bucket[value]) {
-//       // bucket[value] = [key];
-//       bucket[value] = new Set().add(key);
+//       bucket[value] = [key];
 //     } else {
-//       // bucket[value].push(key);
-//       bucket[value].add(key);
+//       bucket[value].push(key);
 //     }
 //   }
 //   for (let i = bucket.length - 1; i >= 0; i--) {
