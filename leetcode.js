@@ -643,6 +643,9 @@
 //         left++;
 //       } else {
 //         set.add(JSON.stringify([nums[i], nums[left], nums[right]]));
+//         // JSON.stringify([-1, 0, 1]) results in "[-1,0,1]".
+//         // JSON.stringify([0, 1, -1]) also results in "[-1,0,1]".
+//         // This is because JSON serialization maintains the order of elements within an array.
 //         right--;
 //         left++;
 //       }
@@ -654,7 +657,7 @@
 // TC: O(n^2)
 // SC: O(n^2)
 // handle duplicates
-// https://www.youtube.com/watch?v=5KeHApBsxG4&ab_channel=JSDev (only check left, which is wrong)
+// https://www.youtube.com/watch?v=5KeHApBsxG4&ab_channel=JSDev
 // var threeSum = function (nums) {
 //   const result = [];
 //   nums.sort((a, b) => a - b);
@@ -676,6 +679,8 @@
 
 //         // Skip duplicate values for the second element
 //         while (left < right && nums[left] === nums[left - 1]) left++;
+//         // https://www.youtube.com/watch?v=jzZsG8n2R9A
+//         // *can only check left, explain for 10:00*
 //         // Skip duplicate values for the third element
 //         while (left < right && nums[right] === nums[right + 1]) right--;
 //       }
