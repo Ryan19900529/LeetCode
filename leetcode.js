@@ -675,14 +675,11 @@
 //       } else {
 //         result.push([nums[i], nums[left], nums[right]]);
 //         left++;
-//         right--; // Also move right pointer
 
 //         // Skip duplicate values for the second element
 //         while (left < right && nums[left] === nums[left - 1]) left++;
 //         // https://www.youtube.com/watch?v=jzZsG8n2R9A
 //         // *can only check left, explain for 10:00*
-//         // Skip duplicate values for the third element
-//         while (left < right && nums[right] === nums[right + 1]) right--;
 //       }
 //     }
 //   }
